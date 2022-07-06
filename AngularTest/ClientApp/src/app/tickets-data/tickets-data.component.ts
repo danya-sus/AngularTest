@@ -9,25 +9,41 @@ import { saveAs } from 'file-saver';
 export class TicketsDataComponent {
   public tickets: Ticket[];
   public airlines: Airline[];
+  public tempTickets: Ticket[];
   public dNumber: string;
   public tNumber: string;
+  public airline: string;
+  public isChecked: boolean;
 
-  constructor(private httpClient: HttpClient) { };
+  constructor(private httpClient: HttpClient) {
+    this.isChecked = true;
+    this.httpClient.get<Airline[]>('transactions/airlines').subscribe(result => {
+      this.airlines = result;
+    }, error => console.error(error));
+  };
 
-  public getTickets() {
-    this.httpClient.get<Ticket[]>('transactions/tickets').subscribe(result => {
+  public getByDocNumber() {
+    this.httpClient.post<Ticket[]>('transactions/by_doc_number', {
+      number: this.dNumber,
+      isChecked: this.isChecked
+    }, {headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).subscribe(result => {
       this.tickets = result;
     }, error => console.error(error));
   }
 
-  public getByDocNumber(docNumber: string) {
-    this.httpClient.get<Ticket[]>('transactions/by_doc_number/' + docNumber).subscribe(result => {
-      this.tickets = result;
-    }, error => console.error(error));
-  }
-
-  public getByTicketNumber(ticketNumber: string) {
-    this.httpClient.get<Ticket[]>('transactions/by_ticket_number/' + ticketNumber).subscribe(result => {
+  public getByTicketNumber() {
+    this.httpClient.post<Ticket[]>('transactions/by_ticket_number', {
+      number: this.tNumber,
+      isChecked: !this.isChecked
+    }, {headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).subscribe(result => {
       this.tickets = result;
     }, error => console.error(error));
   }
@@ -40,16 +56,41 @@ export class TicketsDataComponent {
     this.tNumber = "";
   }
 
-  public getAirlines() {
-    this.httpClient.get<Airline[]>('transactions/airlines').subscribe(result => {
-      this.airlines = result;
-    }, error => console.error(error));
-  }
-
   public toFile() {
-    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-    const header = Object.keys(this.tickets[0]);
-    let csv = this.tickets.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+    this.tickets.forEach(val => this.tempTickets.push(Object.create(val)));
+
+    this.tempTickets.forEach(t => {
+      if (!this.airline.includes(t.airlineCode)) {
+        t.place = "";
+        t.sender = "";
+        t.ticketNumber = "******" + t.ticketNumber.slice(6);
+        t.airlineRouteId = null;
+        t.airlineCode = "";
+        t.departPlace = "";
+        t.arrivePlace = "";
+        t.arriveDatetime = "";
+        t.pnrID = "";
+        t.operatingAirlineCode = "";
+        t.cityFromCode = "";
+        t.cityFromName = "";
+        t.airportFromIcaoCode = "";
+        t.airportFromRfCode = "";
+        t.airportFromName = "";
+        t.cityToCode = "";
+        t.cityToName = "";
+        t.airportToIcaoCode = "";
+        t.airportToRfCode = "";
+        t.airportToName = "";
+        t.flightNums = "";
+        t.fareCode = "";
+        t.farePrice = null;
+      }
+    })
+
+    const replacer = (key, value) => value === null ? '' : value;
+    const header = Object.keys(this.tempTickets[0]);
+
+    let csv = this.tempTickets.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
     csv.unshift(header.join(','));
     let csvArray = csv.join('\r\n');
 

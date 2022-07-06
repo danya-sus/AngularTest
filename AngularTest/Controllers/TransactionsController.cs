@@ -27,29 +27,24 @@ namespace AngularTest.Controllers
             return await _repository.GetAllAirlinesAsync();
         }
 
-        [Route("tickets")]
-        [HttpGet]
-        public async Task<IEnumerable<AllData>> GetAllTicketsAsync()
+        [Route("by_doc_number")]
+        [HttpPost]
+        public async Task<IActionResult> GetByDocNumberAsync([FromBody] InputModelDto dto)
         {
-            return await _repository.GetAllTicketsAsync();
+            if (dto.Number == null) return BadRequest();
+
+            return Ok(await _repository.GetByDocNumAsync(dto.Number));
         }
 
-        [Route("by_doc_number/{docNumber}")]
-        [HttpGet]
-        public async Task<IActionResult> GetByDocNumberAsync(string docNumber)
+        [Route("by_ticket_number")]
+        [HttpPost]
+        public async Task<IActionResult> GetByTicketNumberAsync([FromBody] InputModelDto dto)
         {
-            if (docNumber == null) return BadRequest();
-
-            return Ok(await _repository.GetByDocNumAsync(docNumber));
-        }
-
-        [Route("by_ticket_number/{ticketNumber}")]
-        [HttpGet]
-        public async Task<IActionResult> GetByTicketNumberAsync(string ticketNumber)
-        {
-            if (ticketNumber == null) return BadRequest();
-
-            return Ok(await _repository.GetByTicketNumAsync(ticketNumber));
+            if (dto.IsChecked)
+            {
+                return Ok(await _repository.GetByTicketNumAsync(dto.Number));
+            }
+            return Ok(await _repository.GetByTicketNumAllAsync(dto.Number));
         }
     }
 }

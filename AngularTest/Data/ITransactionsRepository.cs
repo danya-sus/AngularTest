@@ -8,10 +8,10 @@ namespace AngularTest.Data
     {
         Task<IEnumerable<Airline>> GetAllAirlinesAsync();
 
-        Task<IEnumerable<AllData>> GetAllTicketsAsync();
-
         Task<IEnumerable<AllData>> GetByDocNumAsync(string docNum);
 
         Task<IEnumerable<AllData>> GetByTicketNumAsync(string ticketNum);
+
+        Task<IEnumerable<AllData>> GetByTicketNumAllAsync(string ticketNum);
     }
 }
