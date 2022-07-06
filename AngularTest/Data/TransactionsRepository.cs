@@ -34,11 +34,7 @@ namespace AngularTest.Data
             var result = _mapper.Map<IEnumerable<Airline>>(
                 await _context.airline_company.FromSqlRaw(sqlRequest).ToListAsync());
 
-            if (result.Count() > 0)
-            {
-                return result;
-            }
-            throw new NullReferenceException("No data available");
+            return result;
         }
 
         public async Task<IEnumerable<AllData>> GetByDocNumAsync(string docNumber)
@@ -48,11 +44,7 @@ namespace AngularTest.Data
             var result = _mapper.Map<IEnumerable<AllData>>(
                 await _context.data_all.FromSqlRaw(sqlRequest, docNumber).ToListAsync());
 
-            if (result.Count() > 0)
-            {
-                return result;
-            }
-            throw new NullReferenceException("No data available");
+            return result;
         }
 
         public async Task<IEnumerable<AllData>> GetByTicketNumAsync(string ticketNumber)
@@ -62,11 +54,7 @@ namespace AngularTest.Data
             var result = _mapper.Map<IEnumerable<AllData>>(
                 await _context.data_all.FromSqlRaw(sqlRequest, ticketNumber).ToListAsync());
 
-            if (result.Count() > 0)
-            {
-                return result;
-            }
-            throw new NullReferenceException("No data available");
+            return result;
         }
 
         public async Task<IEnumerable<AllData>> GetByTicketNumAllAsync(string ticketNumber)
@@ -76,11 +64,7 @@ namespace AngularTest.Data
             var result = _mapper.Map<IEnumerable<AllData>>(
                 await _context.data_all.FromSqlRaw(sqlRequest, ticketNumber).ToListAsync());
 
-            if (result.Count() > 0)
-            {
-                return result;
-            }
-            throw new NullReferenceException("No data available");
+            return result;
         }
     }
 }

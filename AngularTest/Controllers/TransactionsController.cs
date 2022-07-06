@@ -29,22 +29,22 @@ namespace AngularTest.Controllers
 
         [Route("by_doc_number")]
         [HttpPost]
-        public async Task<IActionResult> GetByDocNumberAsync([FromBody] InputModelDto dto)
+        public async Task<IActionResult> GetByDocNumberAsync([FromBody] InputDocDto dto)
         {
-            if (dto.Number == null) return BadRequest();
+            if (dto.DocNumber == null) return BadRequest();
 
-            return Ok(await _repository.GetByDocNumAsync(dto.Number));
+            return Ok(await _repository.GetByDocNumAsync(dto.DocNumber));
         }
 
         [Route("by_ticket_number")]
         [HttpPost]
-        public async Task<IActionResult> GetByTicketNumberAsync([FromBody] InputModelDto dto)
+        public async Task<IActionResult> GetByTicketNumberAsync([FromBody] InputTicketDto dto)
         {
             if (dto.IsChecked)
             {
-                return Ok(await _repository.GetByTicketNumAsync(dto.Number));
+                return Ok(await _repository.GetByTicketNumAsync(dto.TicketNumber));
             }
-            return Ok(await _repository.GetByTicketNumAllAsync(dto.Number));
+            return Ok(await _repository.GetByTicketNumAllAsync(dto.TicketNumber));
         }
     }
 }

@@ -24,8 +24,7 @@ export class TicketsDataComponent {
 
   public getByDocNumber() {
     this.httpClient.post<Ticket[]>('transactions/by_doc_number', {
-      number: this.dNumber,
-      isChecked: this.isChecked
+      docNumber: this.dNumber
     }, {headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
@@ -37,7 +36,7 @@ export class TicketsDataComponent {
 
   public getByTicketNumber() {
     this.httpClient.post<Ticket[]>('transactions/by_ticket_number', {
-      number: this.tNumber,
+      ticketNumber: this.tNumber,
       isChecked: !this.isChecked
     }, {headers: {
         'Content-Type': 'application/json',
