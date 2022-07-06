@@ -1,0 +1,111 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+
+body {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+aside {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 300px;
+    border-right: 3px solid black;
+    margin-left: 50px;
+    min-height: 80vh;
+}
+
+h1 {
+    margin-bottom: 50px;
+}
+
+main {
+    flex-grow: 10;
+    margin-right: 50px;
+    min-height: 80vh;
+}
+
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+  font-weight: normal;
+  border-radius: 1rem;
+}
+
+.container {
+    margin: 0 0 0 0;
+    max-width: none;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.document {
+    margin-right: 50px;
+    padding: 15px 15px 15px 15px;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgb(113, 113, 113);
+}
+
+.ticket {
+    padding: 15px 15px 15px 15px;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgb(113, 113, 113);
+}
+
+
+.document > p, input, button{
+    margin-bottom: 20px;
+}
+
+.document input{
+    width: 300px;
+}
+
+.radioButton {
+    margin-right: 10px;
+}
+
+label {
+    margin-right: 20px;
+}
+
+.saveMenu{
+    width: 50%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    padding: 15px 15px 15px 15px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgb(113, 113, 113);
+}
+
+.saveMenu > button, p {
+    margin: 0 0 0 0;
+}
+
+option {
+    height: 30px;
+}

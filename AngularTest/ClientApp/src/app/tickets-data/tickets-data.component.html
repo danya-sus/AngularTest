@@ -1,0 +1,67 @@
+<h1 id="tableLabel">Поиск операций</h1>
+
+<div class="menu">
+  <div class="document">
+    <p>По номеру документа, удостоверяющего личность</p>
+    <input type="text" (click)="clearTicketNum()" name="docNumber" placeholder="Введите номер документа" [(ngModel)]="dNumber" #docNumber="ngModel" required/><br />
+    <button [disabled]="docNumber.invalid" class="btn btn-primary" (click)="getByDocNumber(docNumber.value)">Найти данные пассажира</button>
+  </div>
+  <div class="ticket">
+    <p>По номеру перевозочного билета</p>
+    <input type="text" (click)="clearDocNum()" name="ticketNumber" placeholder="Введите номер билета" [(ngModel)]="tNumber" #ticketNumber="ngModel" required pattern="[a-zA-Z0-9]{13}" /><br />
+    <div [hidden]="ticketNumber.valid || ticketNumber.untouched" class="alert alert-danger">
+      Некорректный номер билета
+    </div>
+    <div class="radio-menu">
+      <input type="radio" class="radioButton" name="ticketsChoice" value="allTickets" checked />
+      <label for="allTickets">Все билеты пассажира</label>
+      <input type="radio" class="radioButton" name="ticketsChoice" value="onlyTickets" />
+      <label for="onlyTickets">Только указанные билеты</label>
+    </div>
+    <button [disabled]="ticketNumber.invalid" class="btn btn-primary" (click)="getByTicketNumber(ticketNumber.value)">Найти данные по билету</button>
+  </div>
+</div>
+
+<div *ngIf="tickets" class="saveMenu">
+  <button class="btn btn-primary" (click)="toFile()">Сохранить</button>
+  <button class="btn btn-primary" (click)="getAirlines()">Получить авиакомпании</button>
+  <p>Для авиакомпании</p>
+  <select name="airlines">
+    <option *ngFor="let airline of airlines">{{airline.name}}</option>
+  </select>
+</div>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="tickets">
+  <thead>
+    <tr>
+      <th>Серия, номер</th>
+      <th>Фамилия</th>
+      <th>Имя</th>
+      <th>Отправитель</th>
+      <th>Статус верификации</th>
+      <th>Дата перевозки</th>
+      <th>Тип операции</th>
+      <th>Номер билета</th>
+      <th>Время вылета</th>
+      <th>Код авиакомпании</th>
+      <th>Город вылета</th>
+      <th>Город прилёта</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ticket of tickets">
+      <td>{{ ticket.passengerDocumentNumber }}</td>
+      <td>{{ ticket.surname }}</td>
+      <td>{{ ticket.name }}</td>
+      <td>{{ ticket.sender }}</td>
+      <td>{{ ticket.validationStatus }}</td>
+      <td>{{ ticket.time }}</td>
+      <td>{{ ticket.type }}</td>
+      <td>{{ ticket.ticketNumber }}</td>
+      <td>{{ ticket.departDatetime }}</td>
+      <td>{{ ticket.airlineCode }}</td>
+      <td>{{ ticket.cityFromName }}</td>
+      <td>{{ ticket.cityToName }}</td>
+    </tr>
+  </tbody>
+</table>

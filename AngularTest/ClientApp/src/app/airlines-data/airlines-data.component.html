@@ -1,0 +1,32 @@
+<h1 id="tableLabel">Airlines</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!airlines">
+  <button class="btn btn-primary" (click)="getAirlines()">Get Airlines</button>
+</p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="airlines">
+  <thead>
+    <tr>
+      <th>ID Авиакомпании</th>
+      <th>Название</th>
+      <th>Название на английском</th>
+      <th>Код ICAO</th>
+      <th>Код IATA</th>
+      <th>Код РФ</th>
+      <th>Страна</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let airline of airlines">
+      <td>{{ airline.id }}</td>
+      <td>{{ airline.name }}</td>
+      <td>{{ airline.nameEn }}</td>
+      <td>{{ airline.icaoCode }}</td>
+      <td>{{ airline.iataCode }}</td>
+      <td>{{ airline.rfCode }}</td>
+      <td>{{ airline.country }}</td>
+    </tr>
+  </tbody>
+</table>
